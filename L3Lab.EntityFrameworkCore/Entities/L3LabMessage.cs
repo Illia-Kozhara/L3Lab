@@ -2,7 +2,7 @@
 
 namespace L3Lab.EntityFrameworkCore.Entities
 {
-    public class L3LabMessage
+    public class L3LabMessage : IRepository
     {
         public int Id { get; set; }
         public string Content { get; set; }
