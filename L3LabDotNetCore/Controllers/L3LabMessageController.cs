@@ -47,14 +47,9 @@ namespace L3LabDotNetCore.Controllers
 
         // PUT: api/L3LabMessage/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut]
         public async Task<IActionResult> PutL3LabMessage( L3LabMessage l3LabMessage)
         {
-            /*if (id != l3LabMessage.Id)
-            {
-                return BadRequest();
-            }*/
-
             _context.Entry(l3LabMessage).State = EntityState.Modified;
 
             try
@@ -63,14 +58,7 @@ namespace L3LabDotNetCore.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                /*if (!L3LabMessageExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }*/
+                
             }
 
             return NoContent();
