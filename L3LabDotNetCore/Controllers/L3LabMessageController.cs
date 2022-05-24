@@ -17,7 +17,7 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // GET: api/L3LabMessage
-        [HttpGet]
+        [HttpGet("All")]
         public async Task<ActionResult<IEnumerable<L3LabMessage>>> GetL3LabMessages()
         {
           if (_context.L3LabMessages == null)
@@ -46,7 +46,6 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // PUT: api/L3LabMessage/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut]
         public async Task<IActionResult> PutL3LabMessage( L3LabMessage l3LabMessage)
         {
@@ -65,7 +64,6 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // POST: api/L3LabMessage
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<L3LabMessage>> PostL3LabMessage(L3LabMessage l3LabMessage)
         {
@@ -74,6 +72,7 @@ namespace L3LabDotNetCore.Controllers
               return Problem("Entity set 'MessagesContext.L3LabMessages'  is null.");
           }
             _context.L3LabMessages.Add(l3LabMessage);
+            
             await _context.SaveChangesAsync();
 
             return CreatedAtAction("GetL3LabMessage", new { id = l3LabMessage.Id }, l3LabMessage);
@@ -99,9 +98,29 @@ namespace L3LabDotNetCore.Controllers
             return NoContent();
         }
 
+        [HttpPost("Update")]
+        public async Task<IActionResult> UpdateL3LabMessage(L3LabMessage message)
+        {
+            if (_context.L3LabMessages == null)
+            {
+                return NotFound();
+            }
+            var l3LabMessage = await _context.L3LabMessages.FindAsync(message.Id);
+
+            if (l3LabMessage == null)
+            {
+                return NotFound();
+            }
+            l3LabMessage.Content = message.Content;
+            _context.Entry(l3LabMessage).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
         private bool L3LabMessageExists(int id)
         {
             return (_context.L3LabMessages?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+        
     }
 }
