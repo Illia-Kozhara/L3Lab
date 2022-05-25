@@ -19,7 +19,7 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // GET: api/Notes
-        [HttpGet("/notes")]
+        [HttpGet("/note-controller/notes")]
         public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNotes()
         {
           if (_context.Notes == null)
@@ -31,7 +31,7 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // GET: api/Note/5
-        [HttpGet("{id}")]
+        [HttpGet("/note-controller/note/{id}")]
         public async Task<ActionResult<NoteDTO>> GetNote(int id)
         {
           if (_context.Notes == null)
@@ -49,7 +49,7 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // PUT: api/Note/5
-        [HttpPut]
+        [HttpPut("/note-controller/note")]
         public async Task<IActionResult> PutNote( NoteDTO noteDto)
         {
             _context.Entry(ToNote(noteDto)).State = EntityState.Modified;
@@ -67,7 +67,7 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // POST: api/Note
-        [HttpPost]
+        [HttpPost("/note-controller/note")]
         public async Task<ActionResult<NoteDTO>> PostNote(NoteDTO noteDto)
         {
           if (_context.Notes == null)
@@ -82,7 +82,7 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // DELETE: api/Note/5
-        [HttpDelete("{id}")]
+        [HttpDelete("/note-controller/note/{id}")]
         public async Task<IActionResult> DeleteNote(int id)
         {
             if (_context.Notes == null)
