@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace L3LabDotNetCore.Migrations
 {
-    public partial class nameupdating : Migration
+    public partial class Nameupdating : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

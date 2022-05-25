@@ -13,7 +13,7 @@ namespace L3LabDotNetCore.Migrations
 {
     [DbContext(typeof(NotesContext))]
     [Migration("20220525063300_name-updating")]
-    partial class nameupdating
+    partial class Nameupdating
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
