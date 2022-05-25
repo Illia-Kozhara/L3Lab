@@ -19,7 +19,7 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // GET: api/Notes
-        [HttpGet]
+        [HttpGet("/notes")]
         public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNotes()
         {
           if (_context.Notes == null)
