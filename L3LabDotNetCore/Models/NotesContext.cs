@@ -8,19 +8,19 @@ using System.Threading.Tasks;
 
 namespace L3Lab.EntityFrameworkCore;
 
-public class MessagesContext : DbContext
+public class NotesContext : DbContext
 {
-    public DbSet<L3LabMessage> L3LabMessages { get; set; }
+    public DbSet<Note> Notes { get; set; }
 
     public string DbPath { get; }
 
-    public MessagesContext(DbContextOptions<MessagesContext> options)
+    public NotesContext(DbContextOptions<NotesContext> options)
         : base(options)
     {
 
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<L3LabMessage>().ToTable("L3LabMessage");
+        modelBuilder.Entity<Note>().ToTable("Notes");
     }
 }   

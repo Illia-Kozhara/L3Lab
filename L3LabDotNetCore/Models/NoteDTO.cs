@@ -1,11 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace L3Lab.EntityFrameworkCore.Entities
+﻿namespace L3LabDotNetCore.Models
 {
-    public class L3LabMessage 
+    public class NoteDTO
     {
         public int Id { get; set; }
         public string Content { get; set; }
         public DateTime Created { get; set; }
+
+        
     }
 }

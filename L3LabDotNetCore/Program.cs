@@ -11,7 +11,6 @@ string connection = builder.Configuration.GetConnectionString("DefaultLocalHost"
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 //Mannage Swagger
 builder.Services.AddSwaggerGen(c =>
@@ -19,7 +18,7 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "L3LabApi", Version = "v1" });
 });
 //Mannage DB Context
-builder.Services.AddDbContext<MessagesContext>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<NotesContext>(options => options.UseSqlServer(connection));
 
 
 var app = builder.Build();
@@ -27,7 +26,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<MessagesContext>();
+    var context = services.GetRequiredService<NotesContext>();
     context.Database.EnsureCreated();
     
 }
