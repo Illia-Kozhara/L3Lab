@@ -9,7 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 string connection = builder.Configuration.GetConnectionString("DefaultLocalHost");
 
 // Add services to the container.
-
+builder.Services.AddCors(options =>
+         options.AddPolicy("AllowSpecific", p => p.WithOrigins("https://localhost:4200")
+                                                   .WithMethods("*")
+                                                   .WithHeaders("*")));
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 //Mannage Swagger
@@ -18,15 +21,16 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new() { Title = "L3LabApi", Version = "v1" });
 });
 //Mannage DB Context
-builder.Services.AddDbContext<NotesContext>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(connection));
 
 
 var app = builder.Build();
+app.UseCors();
 
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
-    var context = services.GetRequiredService<NotesContext>();
+    var context = services.GetRequiredService<AppDBContext>();
     context.Database.EnsureCreated();
     
 }

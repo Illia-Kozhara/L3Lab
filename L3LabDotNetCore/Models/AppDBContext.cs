@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace L3Lab.EntityFrameworkCore;
 
-public class NotesContext : DbContext
+public class AppDBContext : DbContext
 {
     public DbSet<Note> Notes { get; set; }
 
     public string DbPath { get; }
 
-    public NotesContext(DbContextOptions<NotesContext> options)
+    public AppDBContext(DbContextOptions<AppDBContext> options)
         : base(options)
     {
 

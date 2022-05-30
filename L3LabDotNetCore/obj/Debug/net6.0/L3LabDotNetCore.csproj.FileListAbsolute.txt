@@ -284,3 +284,7 @@ E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\runtimes\win-ar
 E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\runtimes\win-arm64\lib\net6.0\dotnet-aspnet-codegenerator-design.exe
 E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\package-lock.json
 E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\AutoMapper.dll
+E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\System.Web.Cors.dll
+E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\Microsoft.Owin.dll
+E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\Microsoft.Owin.Cors.dll
+E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\Owin.dll

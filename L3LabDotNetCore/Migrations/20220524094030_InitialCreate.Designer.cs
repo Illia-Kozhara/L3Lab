@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace L3LabDotNetCore.Migrations
 {
-    [DbContext(typeof(NotesContext))]
+    [DbContext(typeof(AppDBContext))]
     [Migration("20220524094030_InitialCreate")]
     partial class InitialCreate
     {

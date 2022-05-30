@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace L3LabDotNetCore.Migrations
 {
-    [DbContext(typeof(NotesContext))]
+    [DbContext(typeof(AppDBContext))]
     partial class MessagesContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
