@@ -79,30 +79,19 @@ namespace L3LabDotNetCore.Controllers
         }
 
         // POST: api/Note
-        /*        [HttpPost]
-                [EnableCors("AllowSpecific")]
-                public async Task<IActionResult> PostNote(NoteDTO noteDTO)
-                {
-                    var id = noteDTO.Id;
-                    if (_context.Notes.Any(x => x.Id == id) == true)
-                    {
-                        return Problem($"Entity with id:{id} aready exist.");
-                    }
-
-                    _context.Notes.Add(ToNote(noteDTO));
-                    await _context.SaveChangesAsync();
-                    return NoContent();
-                }*/
-
-        // POST: api/Note
         [HttpPost]
         [EnableCors("AllowSpecific")]
-        public async Task<IActionResult> PostNoteByContent(string text)
+        public async Task<IActionResult> PostNote(NoteDTO noteDTO)
         {
-            var note = new Note(text, DateTime.Now);
+            var id = noteDTO.Id;
+            if (_context.Notes.Any(x => x.Id == id) == true)
+            {
+                return Problem($"Entity with id:{id} aready exist.");
+            }
+            var note = new Note(noteDTO.Content, DateTime.Now);
             var result = _context.Notes.Add(note);
             await _context.SaveChangesAsync();
-            return Ok("The note has been added sucsessfully." + result);
+            return Ok(note);
         }
 
         // DELETE: api/Note/5
@@ -138,6 +127,11 @@ namespace L3LabDotNetCore.Controllers
         {
             var noteDTO = NoteMapper.GetInstance.MapToDto(note);
             return noteDTO;
+        }
+        private Note ToNote(NoteDTO noteDTO)
+        {
+            var note = NoteMapper.GetInstance.MapToNote(noteDTO);
+            return note;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace L3LabDotNetCore.Models
         public int Id { get; set; }
         [Required]
         public string Content { get; set; }
-        public DateTime Created { get; set; }
+        public string Created { get; set; }
 
         
     }

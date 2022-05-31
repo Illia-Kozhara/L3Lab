@@ -8,7 +8,7 @@ namespace L3LabDotNetCore.Controllers
         Task<IActionResult> DeleteNote(int id);
         Task<ActionResult<NoteDTO>> GetNote(int id);
         Task<ActionResult<IEnumerable<NoteDTO>>> GetNotes();
-        Task<IActionResult> PostNoteByContent(string text);
+        Task<IActionResult> PostNote(NoteDTO noteDTO);
         Task<IActionResult> PutNote(NoteDTO noteDTO);
     }
 }
