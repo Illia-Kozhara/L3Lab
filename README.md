@@ -4,12 +4,12 @@
 ## L3LabDotNetCore
 ### Summary:
   Web API with ASP.NET Core solution with data access against a MSSQL database using Entity Framework Core and Swagger API integration.
-- Program.cs  Services configuration including Swagger and CORS options.
+- Program.cs  Services configuration including Swagger and CORS options. CORS making requests to a different domain ("https://localhost:4200") to all method types.
 - NoteController.cs CRUD provide controller class.
-- AppDBContext.cs DbContext class provides access and managing DB`s data.
-- Note.cs Entity representation class.
-- NoteDTO.cs Data transfer class that represents Note entity.
-- NoteMapper Singletone Note NoteDTO mapper.
+- AppDBContext.cs DbContext class provides access and managing DB`s data. To change path to SQL Server path, mannage "DefaultLocalHost" property in appsettings.json configuration file.
+- Note.cs Entity representation class. Used to configure migration and managing to transfer data to database.
+- NoteDTO.cs Data transfer class that represents Note entity. It is adopted object can be more convenient for clients or hide properties that clients are not supposed to view.
+- NoteMapper Singletone Note NoteDTO mapper. Map the view model object (NoteDTO) to the domain (Note) model object, then we would manually do for each property.
 ## L3LabAngularUI
 ### Summary:
   Angular project SPA UI representation.
