@@ -1,0 +1,65 @@
+<style>
+  input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  div {
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+  }
+</style>
+<style>
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #DDD;
+  }
+
+  tr:hover {
+    background-color: #D6EEEE;
+  }
+</style>
+<h2>{{title}}</h2>
+<div>
+  <form class="w3-container w3-card-4 w3-light-grey">
+    <a>
+        <label>Note text</label>
+        <input type="text" id="new-note" #noteContent>
+    </a>
+    <a>
+      <button type="button" class="add-button" (click)="add(noteContent.value); noteContent.value=''">
+        Add note
+      </button>
+    </a>
+  </form>
+  
+  <form class="w3-container w3-card-4 w3-light-grey">
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Message content</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let note of notes">
+        <tr  routerLink="/detail/{{note.id}}">
+          <td>{{note.id}}</td>
+          <td>{{note.content}}</td>
+          <td>{{note.created}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+</div>
