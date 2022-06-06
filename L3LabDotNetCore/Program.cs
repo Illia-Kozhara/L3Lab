@@ -1,11 +1,8 @@
 
 using L3Lab.EntityFrameworkCore;
-using L3LabDotNetCore;
+using L3Lab.EntityFrameworkCore.Entities;
 using L3LabDotNetCore.Repositories;
-using L3LabDotNetCore.Services.Notes;
-using Microsoft.AspNetCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 /*public class Program
 {
     public static void Main(string[] args)
@@ -31,8 +28,7 @@ builder.Services.AddCors(options =>
          options.AddPolicy("AllowSpecific", p => p.WithOrigins("https://localhost:4200")
                                                    .WithMethods("*")
                                                    .WithHeaders("*")));
-builder.Services.AddScoped<INoteAppService, NoteAppService>();
-builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddScoped<IRepository<Note>, NoteRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace L3Lab.EntityFrameworkCore.Entities
 {
-    public class Note: IRepository
+    public class Note
     {
         public Note (string content, DateTime created)
         {

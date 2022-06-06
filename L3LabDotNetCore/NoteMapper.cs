@@ -39,7 +39,7 @@ namespace L3LabDotNetCore
 
         internal Note MapToNote(NoteDTO noteDTO)
         {
-            note = mapperDto.Map<Note>(noteDTO);
+            note = mapperNote.Map<Note>(noteDTO);
             return note;
         }
     }

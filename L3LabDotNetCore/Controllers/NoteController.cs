@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using L3LabDotNetCore.Models;
 using Microsoft.AspNetCore.Cors;
-using L3LabDotNetCore.Services.Notes;
+using L3LabDotNetCore.Repositories;
+using L3Lab.EntityFrameworkCore.Entities;
 
 namespace L3LabDotNetCore.Controllers
 {
@@ -10,20 +11,20 @@ namespace L3LabDotNetCore.Controllers
     [ApiController]
     public class NoteController : ControllerBase, INoteController
     {
-        private INoteAppService _noteAppService;
+        private IRepository<Note> _repository;
 
-        public NoteController(INoteAppService noteAppService)
+        public NoteController(IRepository<Note> repository)
         {
-            _noteAppService = noteAppService;
+            _repository = repository;
         }
 
 
         // GET: api/Notes
         [HttpGet]
         [EnableCors("AllowSpecific")]
-        public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNotes()
+        public ActionResult GetNotes()
         {
-            var result = await _noteAppService.GetNotesAsync();
+            var result = _repository.GetAll();
             if (result == null)
             {
                 return NotFound(result);
@@ -37,12 +38,8 @@ namespace L3LabDotNetCore.Controllers
         [EnableCors("AllowSpecific")]
         public async Task<ActionResult<NoteDTO>> GetNote(int id)
         {
-            var result = await _noteAppService.GetNoteByIdAsync(id);
-            if (result == null)
-            {
-                return BadRequest($"Entity with id:{id} not found.");
-            }
-            return result;
+            var result = _repository.GetById(id);
+            return Ok(ToNoteDTO(result));
         }
 
         // PUT: api/Note/5
@@ -50,17 +47,16 @@ namespace L3LabDotNetCore.Controllers
         [EnableCors("AllowSpecific")]
         public async Task<IActionResult> PutNote(NoteDTO noteDTO)
         {
-            var id = noteDTO.Id;
-            if (id == null)
+            if (ModelState.IsValid)
             {
-                return NotFound();
+                _repository.Update(ToNote(noteDTO));
+                _repository.Save();
+                return Ok();
             }
-            var result = _noteAppService.UpdateNoteAsync(noteDTO);
-            if (result == Results.BadRequest())
+            else
             {
-                return BadRequest(result);
+                return Ok(noteDTO);
             }
-            return Ok(result);
         }
 
         // POST: api/Note
@@ -68,21 +64,34 @@ namespace L3LabDotNetCore.Controllers
         [EnableCors("AllowSpecific")]
         public async Task<IActionResult> PostNote(NoteDTO noteDTO)
         {
-            var result = await _noteAppService.AddNoteAsync(noteDTO);
-            if (result == Results.BadRequest())
+            if (ModelState.IsValid)
             {
-                return BadRequest(result);
+                _repository.Insert(ToNote(noteDTO));
+                _repository.Save();
+                return Ok();
             }
-                return Ok(result);
+            return Ok();
         }
 
         // DELETE: api/Note/5
         [HttpDelete("{id}")]
         [EnableCors("AllowSpecific")]
-        public async Task<IResult> DeleteNote(int id)
+        public async Task<IActionResult> DeleteNote(int id)
         {
-            var result = _noteAppService.DeleteNoteAsync(id);
-            return await result;
+            _repository.Delete(id);
+            _repository.Save();
+            return Ok();
         }
+        private static NoteDTO ToNoteDTO(Note note)
+        {
+            var noteDTO = NoteMapper.GetInstance.MapToDto(note);
+            return noteDTO;
+        }
+        private static Note ToNote(NoteDTO noteDTO)
+        {
+            var note = NoteMapper.GetInstance.MapToNote(noteDTO);
+            return note;
+        }
+
     }
 }

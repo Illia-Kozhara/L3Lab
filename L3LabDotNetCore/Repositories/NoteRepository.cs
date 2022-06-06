@@ -7,88 +7,13 @@ using System.Web.Http.ModelBinding;
 
 namespace L3LabDotNetCore.Repositories
 {
-    public class NoteRepository: INoteRepository
+    public class NoteRepository: IRepository<Note>
     {
         private AppDBContext _dBContext;
         
         public NoteRepository(AppDBContext dBContext)
         {
             _dBContext = dBContext;
-        }
-
-        public async Task<IResult> AddAsync(string input)
-        {   
-            var note = new Note(input, DateTime.Now);
-            var result = _dBContext.Notes.Add(note);
-            var resultStatus = result.State;
-            if (resultStatus != EntityState.Added)
-            {
-                return Results.BadRequest(result);
-            }
-
-            await _dBContext.SaveChangesAsync();
-            return Results.Ok(note);
-        }
-
-        public async Task<IResult> DeleteAsync(int id)
-        {
-            var note = await _dBContext.Notes.FindAsync(id);
-            if (note == null)
-            {
-                return Results.NotFound(id);
-            }
-
-            var result = _dBContext.Notes.Remove(note);
-            var resultStatus = result.State;
-            if (resultStatus != EntityState.Deleted)
-            {
-                return Results.BadRequest(result);
-            }
-
-            await _dBContext.SaveChangesAsync();
-            return Results.Ok(note);
-        }
-
-        public async Task<ActionResult<IEnumerable<NoteDTO>>> GetAsync()
-        {   
-            var result = await _dBContext.Notes.Select(x => ToNoteDTO(x)).ToListAsync();
-            if (result.Count == 0) 
-            {
-                return null;
-            }
-            return result;
-        }
-
-        public async Task<ActionResult<NoteDTO>> GetByIdAsync(int id)
-        {
-            var result = await _dBContext.Notes.FindAsync(id);
-            if (result == null) 
-            {
-                return null;
-            }
-            return ToNoteDTO(result);
-        }
-
-        public async Task<IResult> UpdateAsync(NoteDTO m)
-        {
-            var id = m.Id;
-            var note = await _dBContext.Notes.FindAsync(id);
-            if (note == null)
-            {
-                return Results.NotFound(m);
-            }
-
-            note.Content = m.Content;
-            note.Created = DateTime.Now;
-            var result = _dBContext.Notes.Update(note);
-            var resultStatus = result.State;
-            if (resultStatus != EntityState.Modified)
-            {
-                return Results.BadRequest(result);
-            }
-
-            await _dBContext.SaveChangesAsync();
-            return Results.Ok(note);
         }
 
         public bool IsNoteExist(int id) 
@@ -105,6 +30,61 @@ namespace L3LabDotNetCore.Repositories
         {
             var noteDTO = NoteMapper.GetInstance.MapToDto(note);
             return noteDTO;
+        }
+
+        public IEnumerable<Note> GetAll()
+        {
+            var result = _dBContext.Notes.ToList();
+            return result;
+        }
+
+        public Note GetById(object id)
+        {
+            var result = _dBContext.Notes.Find(id);
+            return result;
+        }
+
+        public void Insert(Note obj)
+        {
+            obj.Created = DateTime.Now;
+            var result = _dBContext.Notes.Add(obj);
+            //return result;
+        }
+
+        public void Update(Note obj)
+        {
+            obj.Created = DateTime.Now;
+            _dBContext.Entry(obj).State = EntityState.Modified;
+        }
+
+        public void Delete(object id)
+        {
+            Note note = _dBContext.Notes.Find(id);
+            var result = _dBContext.Notes.Remove(note);
+        }
+
+        public void Save()
+        {
+            _dBContext.SaveChanges();
+        }
+
+        private bool disposed = false;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
+            {
+                if (disposing)
+                {
+                    _dBContext.Dispose();
+                }
+            }
+            this.disposed = true;
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

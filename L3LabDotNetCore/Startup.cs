@@ -1,6 +1,6 @@
 ﻿using L3Lab.EntityFrameworkCore;
+using L3Lab.EntityFrameworkCore.Entities;
 using L3LabDotNetCore.Repositories;
-using L3LabDotNetCore.Services.Notes;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -35,8 +35,8 @@ namespace L3LabDotNetCore
             //Mannage DB Context
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(connection));
             
-            services.AddSingleton<INoteAppService, NoteAppService>();
-            services.AddSingleton<INoteRepository, NoteRepository>();
+            //services.AddSingleton<INoteAppService, NoteAppService>();
+            services.AddSingleton<IRepository<Note>, NoteRepository>();
             
             services.AddControllers();
             services.AddEndpointsApiExplorer();
