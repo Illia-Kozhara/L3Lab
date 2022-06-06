@@ -61,12 +61,6 @@ namespace L3LabDotNetCore.Services.Notes
 
         public async Task<IResult> UpdateNoteAsync(NoteDTO m)
         {
-            var id = m.Id;
-            if (_noteRepository.IsNoteExist(id) == false)
-            {
-                return Results.Problem($"Entity with id:{id} not found.");
-            }
-
             var result = await _noteRepository.UpdateAsync(m);
             return result;
         }

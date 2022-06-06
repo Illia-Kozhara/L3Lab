@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using L3Lab.EntityFrameworkCore;
 using L3Lab.EntityFrameworkCore.Entities;
 using L3LabDotNetCore.Models;
+using System.Web.Http.ModelBinding;
 
 namespace L3LabDotNetCore.Repositories
 {
@@ -34,6 +35,11 @@ namespace L3LabDotNetCore.Repositories
         public async Task<IResult> DeleteAsync(int id)
         {
             var note = await _dBContext.Notes.FindAsync(id);
+            if (note == null)
+            {
+                return Results.NotFound(id);
+            }
+
             var result = _dBContext.Notes.Remove(note);
             var resultStatus = result.State;
             if (resultStatus != EntityState.Deleted)
@@ -47,7 +53,11 @@ namespace L3LabDotNetCore.Repositories
 
         public async Task<ActionResult<IEnumerable<NoteDTO>>> GetAsync()
         {   
-            var result = await _dBContext.Notes.Select(x => ToNoteDTO(x)).ToListAsync(); 
+            var result = await _dBContext.Notes.Select(x => ToNoteDTO(x)).ToListAsync();
+            if (result.Count == 0) 
+            {
+                return null;
+            }
             return result;
         }
 
@@ -67,7 +77,7 @@ namespace L3LabDotNetCore.Repositories
             var note = await _dBContext.Notes.FindAsync(id);
             if (note == null)
             {
-                return Results.NotFound();
+                return Results.NotFound(m);
             }
 
             note.Content = m.Content;

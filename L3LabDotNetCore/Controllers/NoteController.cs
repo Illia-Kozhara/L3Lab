@@ -1,11 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using L3Lab.EntityFrameworkCore;
-using L3Lab.EntityFrameworkCore.Entities;
-using AutoMapper;
 using L3LabDotNetCore.Models;
 using Microsoft.AspNetCore.Cors;
-using L3LabDotNetCore.Repositories;
 using L3LabDotNetCore.Services.Notes;
 
 namespace L3LabDotNetCore.Controllers
@@ -29,7 +24,12 @@ namespace L3LabDotNetCore.Controllers
         public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNotes()
         {
             var result = await _noteAppService.GetNotesAsync();
-            return result;
+            if (result == null)
+            {
+                return NotFound(result);
+            }
+
+            return Ok(result);
         }
 
         // GET: api/Note/5
@@ -50,8 +50,17 @@ namespace L3LabDotNetCore.Controllers
         [EnableCors("AllowSpecific")]
         public async Task<IActionResult> PutNote(NoteDTO noteDTO)
         {
-            var note = await _noteAppService.UpdateNoteAsync(noteDTO);
-            return NoContent();
+            var id = noteDTO.Id;
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var result = _noteAppService.UpdateNoteAsync(noteDTO);
+            if (result == Results.BadRequest())
+            {
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
 
         // POST: api/Note
@@ -60,7 +69,11 @@ namespace L3LabDotNetCore.Controllers
         public async Task<IActionResult> PostNote(NoteDTO noteDTO)
         {
             var result = await _noteAppService.AddNoteAsync(noteDTO);
-            return Ok(result);
+            if (result == Results.BadRequest())
+            {
+                return BadRequest(result);
+            }
+                return Ok(result);
         }
 
         // DELETE: api/Note/5

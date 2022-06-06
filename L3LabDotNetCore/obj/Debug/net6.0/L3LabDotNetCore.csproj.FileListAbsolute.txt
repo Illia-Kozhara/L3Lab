@@ -578,3 +578,6 @@ E:\Projects\Student\Новая папка\L3Lab\L3LabDotNetCore\obj\Debug\net6.0
 E:\Projects\Student\Новая папка\L3Lab\L3LabDotNetCore\obj\Debug\net6.0\L3LabDotNetCore.csproj.CopyComplete
 E:\Projects\Student\Новая папка\L3Lab\L3LabDotNetCore\obj\Debug\net6.0\L3LabDotNetCore.genruntimeconfig.cache
 E:\Projects\Student\Новая папка\L3Lab\L3LabDotNetCore\obj\Debug\net6.0\ref\L3LabDotNetCore.dll
+E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\System.Net.Http.Formatting.dll
+E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\System.Web.Http.dll
+E:\Projects\Student\L3Lab\L3Lab\L3LabDotNetCore\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
