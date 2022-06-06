@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LjGvsVUm++ROMhn3ZPZI2N/L8rbdSSVkPoN6Glj1pMLLEfRgJXj7wKcu0lTO/mn5IpxpKypqfkSMeyv3LM7Hzw==",
+  "dgSpecHash": "kaL05E/aRuuHr09CimPIQYExl4axi2QLDAnmTyTEXfAmUVKfVIVsB3lzn5Y5SE/NYM8RvwuAcXFnLDzot9FouA==",
   "success": true,
-  "projectFilePath": "E:\\Projects\\Student\\Новая папка\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj",
+  "projectFilePath": "E:\\Projects\\Student\\L3Lab\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\illia\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\illia\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",

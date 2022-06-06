@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Projects\\Student\\Новая папка\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj": {}
+    "E:\\Projects\\Student\\L3Lab\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj": {}
   },
   "projects": {
-    "E:\\Projects\\Student\\Новая папка\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj": {
+    "E:\\Projects\\Student\\L3Lab\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\Student\\Новая папка\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj",
+        "projectUniqueName": "E:\\Projects\\Student\\L3Lab\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj",
         "projectName": "L3LabDotNetCore",
-        "projectPath": "E:\\Projects\\Student\\Новая папка\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj",
+        "projectPath": "E:\\Projects\\Student\\L3Lab\\L3Lab\\L3LabDotNetCore\\L3LabDotNetCore.csproj",
         "packagesPath": "C:\\Users\\illia\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\Student\\Новая папка\\L3Lab\\L3LabDotNetCore\\obj\\",
+        "outputPath": "E:\\Projects\\Student\\L3Lab\\L3Lab\\L3LabDotNetCore\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "E:\\Installed\\VS_SDK\\NuGetPackages"

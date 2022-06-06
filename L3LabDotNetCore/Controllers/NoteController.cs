@@ -38,6 +38,10 @@ namespace L3LabDotNetCore.Controllers
         public async Task<ActionResult<NoteDTO>> GetNote(int id)
         {
             var result = await _noteAppService.GetNoteByIdAsync(id);
+            if (result == null)
+            {
+                return BadRequest($"Entity with id:{id} not found.");
+            }
             return result;
         }
 

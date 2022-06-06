@@ -10,7 +10,7 @@ namespace L3LabDotNetCore.Repositories
     {
         private readonly IDBHelper _dBHelper;
         private AppDBContext _dBContext;
-
+        
         public NoteRepository(IDBHelper dBHelper, AppDBContext dBContext)
         {
             _dBHelper = dBHelper;
@@ -21,6 +21,12 @@ namespace L3LabDotNetCore.Repositories
         {   
             var note = new Note(input, DateTime.Now);
             var result = _dBContext.Notes.Add(note);
+            var resultStatus = result.State;
+            if (resultStatus != EntityState.Added)
+            {
+                return Results.BadRequest(result);
+            }
+
             await _dBContext.SaveChangesAsync();
             return Results.Ok(note);
         }
@@ -29,6 +35,12 @@ namespace L3LabDotNetCore.Repositories
         {
             var note = await _dBContext.Notes.FindAsync(id);
             var result = _dBContext.Notes.Remove(note);
+            var resultStatus = result.State;
+            if (resultStatus != EntityState.Deleted)
+            {
+                return Results.BadRequest(result);
+            }
+
             await _dBContext.SaveChangesAsync();
             return Results.Ok(note);
         }
@@ -42,6 +54,10 @@ namespace L3LabDotNetCore.Repositories
         public async Task<ActionResult<NoteDTO>> GetByIdAsync(int id)
         {
             var result = await _dBContext.Notes.FindAsync(id);
+            if (result == null) 
+            {
+                return null;
+            }
             return ToNoteDTO(result);
         }
 
@@ -57,6 +73,12 @@ namespace L3LabDotNetCore.Repositories
             note.Content = m.Content;
             note.Created = DateTime.Now;
             var result = _dBContext.Notes.Update(note);
+            var resultStatus = result.State;
+            if (resultStatus != EntityState.Modified)
+            {
+                return Results.BadRequest(result);
+            }
+
             await _dBContext.SaveChangesAsync();
             return Results.Ok(note);
         }

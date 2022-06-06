@@ -19,6 +19,10 @@ using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Add logger
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+
 // Get connection string from settings
 string connection = builder.Configuration.GetConnectionString("DefaultLocalHost");
 

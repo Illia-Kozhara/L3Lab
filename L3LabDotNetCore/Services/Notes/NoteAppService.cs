@@ -21,7 +21,7 @@ namespace L3LabDotNetCore.Services.Notes
             var id = input.Id;
             if (input == null) 
             {
-                return Results.Problem($"Entity with id:{id} not found.");
+                return Results.Problem("Imput data is null.");
             }
 
             var note = input.Content;
@@ -49,6 +49,7 @@ namespace L3LabDotNetCore.Services.Notes
         public async Task<ActionResult<NoteDTO>> GetNoteByIdAsync(int id)
         {
             var result = await _noteRepository.GetByIdAsync(id);
+            
             return result;
         }
 
