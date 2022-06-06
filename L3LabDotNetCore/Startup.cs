@@ -37,7 +37,6 @@ namespace L3LabDotNetCore
             
             services.AddSingleton<INoteAppService, NoteAppService>();
             services.AddSingleton<INoteRepository, NoteRepository>();
-            services.AddSingleton<IDBHelper, DBHelper>();
             
             services.AddControllers();
             services.AddEndpointsApiExplorer();

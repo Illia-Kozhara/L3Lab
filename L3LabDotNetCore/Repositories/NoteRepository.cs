@@ -9,10 +9,9 @@ namespace L3LabDotNetCore.Repositories
 {
     public class NoteRepository: INoteRepository
     {
-        private readonly IDBHelper _dBHelper;
         private AppDBContext _dBContext;
         
-        public NoteRepository(IDBHelper dBHelper, AppDBContext dBContext)
+        public NoteRepository(AppDBContext dBContext)
         {
             _dBHelper = dBHelper;
             _dBContext = dBContext;
