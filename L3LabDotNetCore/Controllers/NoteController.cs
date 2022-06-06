@@ -5,6 +5,8 @@ using L3Lab.EntityFrameworkCore.Entities;
 using AutoMapper;
 using L3LabDotNetCore.Models;
 using Microsoft.AspNetCore.Cors;
+using L3LabDotNetCore.Repositories;
+using L3LabDotNetCore.Services.Notes;
 
 namespace L3LabDotNetCore.Controllers
 {
@@ -13,11 +15,11 @@ namespace L3LabDotNetCore.Controllers
     [ApiController]
     public class NoteController : ControllerBase, INoteController
     {
-        private readonly L3Lab.EntityFrameworkCore.AppDBContext _context;
+        private INoteAppService _noteAppService;
 
-        public NoteController(L3Lab.EntityFrameworkCore.AppDBContext context)
+        public NoteController(INoteAppService noteAppService)
         {
-            _context = context;
+            _noteAppService = noteAppService;
         }
 
 
@@ -26,13 +28,8 @@ namespace L3LabDotNetCore.Controllers
         [EnableCors("AllowSpecific")]
         public async Task<ActionResult<IEnumerable<NoteDTO>>> GetNotes()
         {
-            if (_context.Notes.Any() == false)
-            {
-                return Problem("No entities found!");
-            }
-
-            var notes = await _context.Notes.Select(x => ToNoteDTO(x)).ToListAsync();
-            return notes;
+            var result = await _noteAppService.GetNotesAsync();
+            return result;
         }
 
         // GET: api/Note/5
@@ -40,19 +37,8 @@ namespace L3LabDotNetCore.Controllers
         [EnableCors("AllowSpecific")]
         public async Task<ActionResult<NoteDTO>> GetNote(int id)
         {
-            if (_context.Notes.Any(x => x.Id == id) == false)
-            {
-                return Problem($"Entity with id:{id} not found.");
-            }
-
-            var note = await _context.Notes.FindAsync(id);
-            if (note == null)
-            {
-                return NotFound();
-            }
-
-            var noteDto = ToNoteDTO(note);
-            return noteDto;
+            var result = await _noteAppService.GetNoteByIdAsync(id);
+            return result;
         }
 
         // PUT: api/Note/5
@@ -60,21 +46,7 @@ namespace L3LabDotNetCore.Controllers
         [EnableCors("AllowSpecific")]
         public async Task<IActionResult> PutNote(NoteDTO noteDTO)
         {
-            var id = noteDTO.Id;
-            if (_context.Notes.Any(x => x.Id == id) == false)
-            {
-                return BadRequest();
-            }
-
-            var note = await _context.Notes.FindAsync(id);
-            if (note == null)
-            {
-                return NotFound();
-            }
-
-            note.Content = noteDTO.Content;
-            var result = _context.Notes.Update(note);
-            await _context.SaveChangesAsync();
+            var note = await _noteAppService.UpdateNoteAsync(noteDTO);
             return NoContent();
         }
 
@@ -83,55 +55,17 @@ namespace L3LabDotNetCore.Controllers
         [EnableCors("AllowSpecific")]
         public async Task<IActionResult> PostNote(NoteDTO noteDTO)
         {
-            var id = noteDTO.Id;
-            if (_context.Notes.Any(x => x.Id == id) == true)
-            {
-                return Problem($"Entity with id:{id} aready exist.");
-            }
-            var note = new Note(noteDTO.Content, DateTime.Now);
-            var result = _context.Notes.Add(note);
-            await _context.SaveChangesAsync();
-            return Ok(note);
+            var result = await _noteAppService.AddNoteAsync(noteDTO);
+            return Ok(result);
         }
 
         // DELETE: api/Note/5
         [HttpDelete("{id}")]
         [EnableCors("AllowSpecific")]
-        public async Task<IActionResult> DeleteNote(int id)
+        public async Task<IResult> DeleteNote(int id)
         {
-            if (_context.Notes.Any(x => x.Id == id) == false)
-            {
-                return Problem($"Entity with id:{id} not found.");
-            }
-
-            var note = await _context.Notes.FindAsync(id);
-            if (note == null)
-            {
-                return NotFound();
-            }
-
-            var result = _context.Notes.Remove(note);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool IsNoteExists(int id)
-        {
-            return (_context.Notes?.Any(e => e.Id == id)).GetValueOrDefault();
-        }
-
-        //Mapper released method
-        //Param note (Note) to NoteDTO object
-        private static NoteDTO ToNoteDTO(Note note)
-        {
-            var noteDTO = NoteMapper.GetInstance.MapToDto(note);
-            return noteDTO;
-        }
-        private Note ToNote(NoteDTO noteDTO)
-        {
-            var note = NoteMapper.GetInstance.MapToNote(noteDTO);
-            return note;
+            var result = _noteAppService.DeleteNoteAsync(id);
+            return await result;
         }
     }
 }

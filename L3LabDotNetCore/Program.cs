@@ -1,7 +1,21 @@
 
 using L3Lab.EntityFrameworkCore;
+using L3LabDotNetCore;
+using L3LabDotNetCore.Repositories;
+using L3LabDotNetCore.Services.Notes;
+using Microsoft.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+/*public class Program
+{
+    public static void Main(string[] args)
+    {
+        CreateWebHostBuilder(args).Build().Run();
+    }
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+            WebHost.CreateDefaultBuilder(args)
+                .UseStartup<Startup>();
+}*/
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,16 +27,21 @@ builder.Services.AddCors(options =>
          options.AddPolicy("AllowSpecific", p => p.WithOrigins("https://localhost:4200")
                                                    .WithMethods("*")
                                                    .WithHeaders("*")));
+builder.Services.AddScoped<INoteAppService, NoteAppService>();
+builder.Services.AddScoped<INoteRepository, NoteRepository>();
+builder.Services.AddScoped<IDBHelper, DBHelper>();
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
 //Mannage Swagger
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new() { Title = "L3LabApi", Version = "v1" });
 });
+
 //Mannage DB Context
 builder.Services.AddDbContext<AppDBContext>(options => options.UseSqlServer(connection));
-
 
 var app = builder.Build();
 app.UseCors();
@@ -32,7 +51,7 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     var context = services.GetRequiredService<AppDBContext>();
     context.Database.EnsureCreated();
-    
+
 }
 
 // Configure the HTTP request pipeline.
@@ -44,6 +63,7 @@ if (app.Environment.IsDevelopment())
 
 
 // добавляем контекст ApplicationContext в качестве сервиса в приложение
+
 
 app.UseHttpsRedirection();
 
