@@ -13,7 +13,6 @@ namespace L3LabDotNetCore.Repositories
         
         public NoteRepository(AppDBContext dBContext)
         {
-            _dBHelper = dBHelper;
             _dBContext = dBContext;
         }
 

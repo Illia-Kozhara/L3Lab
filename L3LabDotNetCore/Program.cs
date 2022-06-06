@@ -33,7 +33,6 @@ builder.Services.AddCors(options =>
                                                    .WithHeaders("*")));
 builder.Services.AddScoped<INoteAppService, NoteAppService>();
 builder.Services.AddScoped<INoteRepository, NoteRepository>();
-builder.Services.AddScoped<IDBHelper, DBHelper>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
