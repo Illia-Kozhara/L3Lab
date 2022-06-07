@@ -7,7 +7,7 @@ using System.Web.Http.ModelBinding;
 
 namespace L3LabDotNetCore.Repositories
 {
-    public class NoteRepository: IRepository<Note>
+    public class NoteRepository: IRepository<Note, int>
     {
         private AppDBContext _dBContext;
         
@@ -26,19 +26,13 @@ namespace L3LabDotNetCore.Repositories
 
         }
 
-        private static NoteDTO ToNoteDTO(Note note)
-        {
-            var noteDTO = NoteMapper.GetInstance.MapToDto(note);
-            return noteDTO;
-        }
-
         public IEnumerable<Note> GetAll()
         {
             var result = _dBContext.Notes.ToList();
             return result;
         }
 
-        public Note GetById(object id)
+        public Note GetById(int id)
         {
             var result = _dBContext.Notes.Find(id);
             return result;
@@ -57,7 +51,7 @@ namespace L3LabDotNetCore.Repositories
             _dBContext.Entry(obj).State = EntityState.Modified;
         }
 
-        public void Delete(object id)
+        public void Delete(int id)
         {
             Note note = _dBContext.Notes.Find(id);
             var result = _dBContext.Notes.Remove(note);
@@ -86,5 +80,6 @@ namespace L3LabDotNetCore.Repositories
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
     }
 }

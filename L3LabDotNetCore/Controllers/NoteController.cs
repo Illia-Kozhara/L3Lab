@@ -11,9 +11,9 @@ namespace L3LabDotNetCore.Controllers
     [ApiController]
     public class NoteController : ControllerBase, INoteController
     {
-        private IRepository<Note> _repository;
+        private IRepository<Note, int> _repository;
 
-        public NoteController(IRepository<Note> repository)
+        public NoteController(IRepository<Note, int> repository)
         {
             _repository = repository;
         }

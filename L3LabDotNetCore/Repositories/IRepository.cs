@@ -4,22 +4,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace L3LabDotNetCore.Repositories
 {
-    /*public interface IRepository<Note, int>
+    public interface IRepository<TEntity> where TEntity : class
     {
-        public Task<IResult> AddAsync(string input);
-        public Task<ActionResult<IEnumerable<NoteDTO>>> GetAsync();
-        public Task<ActionResult<NoteDTO>> GetByIdAsync(int id);
-        public Task<IResult> DeleteAsync(int id);
-        public Task<IResult> UpdateAsync(NoteDTO m);
-        public bool IsNoteExist(int id);
-    }*/
-    public interface IRepository<T> where T : class
-    {
-        IEnumerable<T> GetAll();
-        T GetById(object id);
-        void Insert(T obj);
-        void Update(T obj);
+        IEnumerable<TEntity> GetAll();
+        TEntity GetById(object id);
+        void Insert(TEntity obj);
+        void Update(TEntity obj);
         void Delete(object id);
         void Save();
+    }
+    public interface IRepository<TEntity, TPrimaryKey> where TEntity : class, IEntity<TPrimaryKey>
+    {
+        IEnumerable<TEntity> GetAll();
+        TEntity GetById(TPrimaryKey pk);
+        void Insert(TEntity obj);
+        void Update(TEntity obj);
+        void Delete(TPrimaryKey pk);
+        void Save();
+    }
+
+    public interface IEntity<TPrimaryKey>
+    {
     }
 }

@@ -28,7 +28,7 @@ builder.Services.AddCors(options =>
          options.AddPolicy("AllowSpecific", p => p.WithOrigins("https://localhost:4200")
                                                    .WithMethods("*")
                                                    .WithHeaders("*")));
-builder.Services.AddScoped<IRepository<Note>, NoteRepository>();
+builder.Services.AddScoped<IRepository<Note, int>, NoteRepository>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

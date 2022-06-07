@@ -36,7 +36,7 @@ namespace L3LabDotNetCore
             services.AddDbContext<AppDBContext>(options => options.UseSqlServer(connection));
             
             //services.AddSingleton<INoteAppService, NoteAppService>();
-            services.AddSingleton<IRepository<Note>, NoteRepository>();
+            services.AddSingleton<IRepository<Note, int>, NoteRepository>();
             
             services.AddControllers();
             services.AddEndpointsApiExplorer();
