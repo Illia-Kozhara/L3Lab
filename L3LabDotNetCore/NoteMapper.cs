@@ -6,10 +6,10 @@ namespace L3LabDotNetCore
 {
     public sealed class NoteMapper
     {
-        private NoteDTO noteDTO;
-        private Note note; 
-        private Mapper mapperDto;
-        private Mapper mapperNote;
+        private NoteDTO _noteDTO;
+        private Note _note; 
+        private readonly Mapper _mapperDto;
+        private readonly Mapper _mapperNote;
 
 
         private static NoteMapper instance = null;
@@ -26,21 +26,21 @@ namespace L3LabDotNetCore
 
         private NoteMapper()
         {
-            mapperDto = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<Note, NoteDTO>()));
-            mapperNote = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<NoteDTO, Note>()));
+            _mapperDto = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<Note, NoteDTO>()));
+            _mapperNote = new Mapper(new MapperConfiguration(cfg => cfg.CreateMap<NoteDTO, Note>()));
 
         }
 
         public NoteDTO MapToDto(Note note)
         {
-            noteDTO = mapperDto.Map<NoteDTO>(note);
-            return noteDTO;
+            _noteDTO = _mapperDto.Map<NoteDTO>(note);
+            return _noteDTO;
         }
 
         internal Note MapToNote(NoteDTO noteDTO)
         {
-            note = mapperDto.Map<Note>(noteDTO);
-            return note;
+            _note = _mapperNote.Map<Note>(noteDTO);
+            return _note;
         }
     }
 }

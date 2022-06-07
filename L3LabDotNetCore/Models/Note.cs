@@ -1,9 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+﻿using L3LabDotNetCore.Repositories;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.ComponentModel.DataAnnotations;
 
 namespace L3Lab.EntityFrameworkCore.Entities
 {
-    public class Note 
+    public class Note: IEntity<int>
     {
         public Note (string content, DateTime created)
         {
