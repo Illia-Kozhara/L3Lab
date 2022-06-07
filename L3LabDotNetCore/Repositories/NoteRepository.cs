@@ -42,7 +42,6 @@ namespace L3LabDotNetCore.Repositories
         {
             obj.Created = DateTime.Now;
             var result = _dBContext.Notes.Add(obj);
-            //return result;
         }
 
         public void Update(Note obj)
@@ -61,25 +60,5 @@ namespace L3LabDotNetCore.Repositories
         {
             _dBContext.SaveChanges();
         }
-
-        private bool disposed = false;
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!this.disposed)
-            {
-                if (disposing)
-                {
-                    _dBContext.Dispose();
-                }
-            }
-            this.disposed = true;
-        }
-
-        public void Dispose()
-        {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
     }
 }
