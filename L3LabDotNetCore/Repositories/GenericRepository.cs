@@ -12,6 +12,10 @@ namespace L3LabDotNetCore.Repositories
         private AppDBContext _dBContext;
         private DbSet<TEntity> _table = null;
 
+        /*public GenericRepository()
+        {
+            //_dBContext = new AppDBContext();
+        }*/
 
         public GenericRepository(AppDBContext dBContext)
         {
@@ -23,6 +27,11 @@ namespace L3LabDotNetCore.Repositories
         {
             var entity = _table.Find(pk);
             var result = _table.Remove(entity);
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
         }
 
         public List<TEntity> GetAll()

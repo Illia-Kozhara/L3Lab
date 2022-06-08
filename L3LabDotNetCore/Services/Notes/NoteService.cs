@@ -22,7 +22,7 @@ namespace L3LabDotNetCore.Services.Notes
         public IEnumerable<Note> GetAll()
         {
             var result = _repository.GetAll();
-            //result.ForEach(x => ToNoteDTO(x));
+            //var sub = result.ForEach(x => ToNoteDTO(x));
             return result;
         }
 

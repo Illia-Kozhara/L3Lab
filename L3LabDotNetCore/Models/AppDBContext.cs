@@ -19,6 +19,7 @@ public class AppDBContext : DbContext
     {
 
     }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Note>().ToTable("Notes");
