@@ -2,6 +2,7 @@
 using L3Lab.EntityFrameworkCore;
 using L3Lab.EntityFrameworkCore.Entities;
 using L3LabDotNetCore.Repositories;
+using L3LabDotNetCore.Services.Notes;
 using Microsoft.EntityFrameworkCore;
 /*public class Program
 {
@@ -28,8 +29,10 @@ builder.Services.AddCors(options =>
          options.AddPolicy("AllowSpecific", p => p.WithOrigins("https://localhost:4200")
                                                    .WithMethods("*")
                                                    .WithHeaders("*")));
-builder.Services.AddScoped<IRepository<Note, int>, NoteRepository>();
-
+//builder.Services.AddScoped<IRepository<Note, int>, AppRepository<Note, int>>();
+builder.Services.AddTransient(typeof(INoteService), typeof(NoteService));
+builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+ 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
