@@ -12,11 +12,6 @@ namespace L3LabDotNetCore.Repositories
         private AppDBContext _dBContext;
         private DbSet<TEntity> _table = null;
 
-        /*public GenericRepository()
-        {
-            //_dBContext = new AppDBContext();
-        }*/
-
         public GenericRepository(AppDBContext dBContext)
         {
             _dBContext = dBContext;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using L3Lab.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
@@ -13,7 +14,7 @@ namespace L3LabDotNetCore.Repositories.UnitOfWork
         private readonly TContext _context;
         private bool _disposed;
         private string _errorMessage = string.Empty;
-        private DbContextTransaction _objTran;
+        private DbContextTransaction _objTransaction;
         private Dictionary<string, object> _repositories;
         //Using the Constructor we are initializing the _context variable is nothing but
         //we are storing the DBContext (EmployeeDBContext) object in _context variable
@@ -37,20 +38,20 @@ namespace L3LabDotNetCore.Repositories.UnitOfWork
         //applying do evrything and do nothing principle
         public void CreateTransaction()
         {
-            _objTran = _context.Database.BeginTransaction();
+            _objTransaction = _context.Database.BeginTransaction();
         }
         //If all the Transactions are completed successfuly then we need to call this Commit() 
         //method to Save the changes permanently in the database
         public void Commit()
         {
-            _objTran.Commit();
+            _objTransaction.Commit();
         }
         //If atleast one of the Transaction is Failed then we need to call this Rollback() 
         //method to Rollback the database changes to its previous state
         public void Rollback()
         {
-            _objTran.Rollback();
-            _objTran.Dispose();
+            _objTransaction.Rollback();
+            _objTransaction.Dispose();
         }
         //This Save() Method Implement DbContext Class SaveChanges method so whenever we do a transaction we need to
         //call this Save() method so that it will make the changes in the database

@@ -1,4 +1,5 @@
-﻿using L3Lab.EntityFrameworkCore.Entities;
+﻿using L3Lab.EntityFrameworkCore;
+using L3Lab.EntityFrameworkCore.Entities;
 using L3LabDotNetCore.Models;
 using L3LabDotNetCore.Repositories;
 
@@ -7,10 +8,16 @@ namespace L3LabDotNetCore.Services.Notes
     public class NoteService : INoteService
     {
         private IGenericRepository<Note> _repository;
+        private readonly IServiceProvider _provider;
 
-        public NoteService(IGenericRepository<Note> repository)
+        public NoteService(/*IGenericRepository<Note> repository, */IServiceProvider provider)
         {
-            _repository = repository;
+            _provider = provider;
+            //Get DbContext from Service provider without IRepository DI
+            var scope = _provider.CreateScope();
+            var context = scope.ServiceProvider.GetRequiredService<AppDBContext>();
+
+            _repository = new GenericRepository<Note>(context);
         }
 
         public void Delete(int id)
@@ -19,11 +26,15 @@ namespace L3LabDotNetCore.Services.Notes
             _repository.Save();
         }
 
-        public IEnumerable<Note> GetAll()
+        public IEnumerable<NoteDTO> GetAll()
         {
             var result = _repository.GetAll();
-            //var sub = result.ForEach(x => ToNoteDTO(x));
-            return result;
+            List<NoteDTO> sub = new List<NoteDTO>();
+            foreach (Note i in result)
+            {
+                sub.Add(ToNoteDTO(i));
+            }
+            return sub;
         }
 
         public NoteDTO GetById(int id)

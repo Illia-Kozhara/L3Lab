@@ -5,7 +5,7 @@ namespace L3LabDotNetCore.Services.Notes
 {
     public interface INoteService
     {
-        IEnumerable<Note> GetAll();
+        IEnumerable<NoteDTO> GetAll();
         NoteDTO GetById(int id);
         void Insert(NoteDTO obj);
         void Update(NoteDTO obj);

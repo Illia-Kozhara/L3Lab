@@ -30,7 +30,9 @@ builder.Services.AddCors(options =>
                                                    .WithMethods("*")
                                                    .WithHeaders("*")));
 
-builder.Services.AddScoped<IGenericRepository<Note>, GenericRepository<Note>>();
+//builder.Services.AddScoped<IGenericRepository<Note>, GenericRepository<Note>>();
+//builder.Services.AddTransient(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+//builder.Services.AddScoped<IServiceProvider, ServiceProvider>();
 builder.Services.AddScoped<INoteService, NoteService>();
  
 builder.Services.AddControllers();
