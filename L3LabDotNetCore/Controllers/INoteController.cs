@@ -5,10 +5,10 @@ namespace L3LabDotNetCore.Controllers
 {
     public interface INoteController
     {
-        Task<IActionResult> DeleteNote(int id);
-        Task<ActionResult<NoteDTO>> GetNote(int id);
-        ActionResult GetNotes();
-        Task<IActionResult> PostNote(NoteDTO noteDTO);
-        Task<IActionResult> PutNote(NoteDTO noteDTO);
+        IActionResult DeleteNote(int id);
+        ActionResult GetNote(int id);
+        IActionResult GetNotes();
+        IActionResult PostNote(NoteDTO noteDTO);
+        IActionResult PutNote(NoteDTO noteDTO);
     }
 }

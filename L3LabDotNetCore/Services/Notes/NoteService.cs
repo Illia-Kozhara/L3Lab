@@ -2,6 +2,7 @@
 using L3Lab.EntityFrameworkCore.Entities;
 using L3LabDotNetCore.Models;
 using L3LabDotNetCore.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 namespace L3LabDotNetCore.Services.Notes
 {
@@ -19,16 +20,31 @@ namespace L3LabDotNetCore.Services.Notes
 
             _repository = new GenericRepository<Note>(context);
         }
-
-        public void Delete(int id)
+        public NoteService(IGenericRepository<Note> repository)
         {
+            _repository = repository;
+        }
+
+        public IResult Delete(int id)
+        {
+            if (_repository.GetByPk(id) == null)
+            {
+                return Results.BadRequest("Note with same Id dosen`t exist!");
+            }
+
             _repository.Delete(id);
             _repository.Save();
+            return Results.Ok();
         }
 
         public IEnumerable<NoteDTO> GetAll()
         {
             var result = _repository.GetAll();
+            if (result.Count == 0)
+            {
+                return null;
+            }
+
             List<NoteDTO> sub = new List<NoteDTO>();
             foreach (Note i in result)
             {
@@ -40,21 +56,49 @@ namespace L3LabDotNetCore.Services.Notes
         public NoteDTO GetById(int id)
         {
             var result = _repository.GetByPk(id);
+            if (result == null)
+            {
+                return null;
+            }
+
             return ToNoteDTO(result);
         }
 
-        public void Insert(NoteDTO obj)
+        public int Insert(NoteDTO obj)
         {
+            if (obj == null)
+            {
+                return StatusCodes.EmptyData;
+            }
+
+            if (_repository.GetByPk(obj.Id) != null)
+            {
+                return StatusCodes.DataAllredyExist;
+            }
+
             _repository.Insert(ToNote(obj));
             _repository.Save();
+            return StatusCodes.OkData;
 
         }
 
-        public void Update(NoteDTO obj)
+        public async Task<IResult> Update(NoteDTO obj)
         {
+            if (obj == null)
+            {
+                return Results.NoContent();
+            }
+
+            if (_repository.GetByPk(obj.Id) == null)
+            {
+                return Results.BadRequest("Note with same Id doesen`t exist!");
+            }
+
             _repository.Update(ToNote(obj));
-            _repository.Save();
+            await _repository.Save();
+            return Results.Ok();
         }
+
         private static NoteDTO ToNoteDTO(Note note)
         {
             var noteDTO = NoteMapper.GetInstance.MapToDto(note);

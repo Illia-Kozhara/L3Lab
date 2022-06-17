@@ -46,9 +46,9 @@ namespace L3LabDotNetCore.Repositories
             var result = _table.Add(obj);
         }
 
-        public void Save()
+        public async Task Save()
         {
-            _dBContext.SaveChanges();
+            var result = await _dBContext.SaveChangesAsync();
         }
 
         public void Update(TEntity obj)

@@ -11,6 +11,6 @@ namespace L3LabDotNetCore.Repositories
         void Insert(TEntity obj);
         void Update(TEntity obj);
         void Delete(int pk);
-        void Save();
+        Task Save();
     }
 }

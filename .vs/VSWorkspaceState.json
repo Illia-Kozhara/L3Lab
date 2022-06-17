@@ -1,7 +1,9 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\L3LabDotNetCore",
+    "\\L3LabDotNetCore\\Controllers"
   ],
-  "SelectedNode": "\\L3LabDotNetCore.sln",
+  "SelectedNode": "\\L3LabDotNetCore\\Controllers\\INoteController.cs",
   "PreviewInSolutionExplorer": false
 }

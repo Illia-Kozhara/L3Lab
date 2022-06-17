@@ -7,8 +7,8 @@ namespace L3LabDotNetCore.Services.Notes
     {
         IEnumerable<NoteDTO> GetAll();
         NoteDTO GetById(int id);
-        void Insert(NoteDTO obj);
-        void Update(NoteDTO obj);
-        void Delete(int id);
+        int Insert(NoteDTO obj);
+        Task<IResult> Update(NoteDTO obj);
+        IResult Delete(int id);
     }
 }

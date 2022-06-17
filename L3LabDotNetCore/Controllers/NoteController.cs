@@ -23,12 +23,12 @@ namespace L3LabDotNetCore.Controllers
         // GET: api/Notes
         [HttpGet]
         [EnableCors("AllowSpecific")]
-        public ActionResult GetNotes()
+        public IActionResult GetNotes()
         {
             var result = _noteService.GetAll();
             if (result == null)
             {
-                return NotFound(result);
+                return NoContent();
             }
 
             return Ok(result);
@@ -37,34 +37,49 @@ namespace L3LabDotNetCore.Controllers
         // GET: api/Note/5
         [HttpGet("{id}")]
         [EnableCors("AllowSpecific")]
-        public async Task<ActionResult<NoteDTO>> GetNote(int id)
+        public ActionResult GetNote(int id)
         {
             var result = _noteService.GetById(id);
+            if (result == null)
+            {
+                return NotFound(result);
+            }
+
             return Ok(result);
         }
 
         // PUT: api/Note/5
         [HttpPut]
         [EnableCors("AllowSpecific")]
-        public async Task<IActionResult> PutNote(NoteDTO noteDTO)
+        public IActionResult PutNote(NoteDTO noteDTO)
         {
             _noteService.Update(noteDTO);
-            return Ok();
+            return Ok(noteDTO);
         }
 
         // POST: api/Note
         [HttpPost]
         [EnableCors("AllowSpecific")]
-        public async Task<IActionResult> PostNote(NoteDTO noteDTO)
+        public IActionResult PostNote(NoteDTO noteDTO)
         {
-            _noteService.Insert(noteDTO);
-            return Ok();
+            var result = _noteService.Insert(noteDTO);
+            if (result == StatusCodes.EmptyData)
+            {
+                return NotFound();
+            }
+
+            if (result == StatusCodes.DataAllredyExist)
+            {
+                return BadRequest("Component with same ID already exist");
+            }
+
+            return Ok(result);
         }
 
         // DELETE: api/Note/5
         [HttpDelete("{id}")]
         [EnableCors("AllowSpecific")]
-        public async Task<IActionResult> DeleteNote(int id)
+        public IActionResult DeleteNote(int id)
         {
             _noteService.Delete(id);
             return Ok();
