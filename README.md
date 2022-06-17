@@ -5,12 +5,14 @@
 ### Summary:
   Web API with ASP.NET Core solution with data access against a MSSQL database using Entity Framework Core and Swagger API integration.
 - Program.cs  Services configuration including Swagger and CORS options. CORS making requests to a different domain ("https://localhost:4200") to all method types.
-- NoteController.cs CRUD provide controller class.
-- Data access provided by revository pattern trought **NoteRepository.cs** that realized **IRepository<TEntity, TPrimaryKey>** interface. Included by the **Dependency Injection** pattern.
+- NoteController.cs CRUD provide controller class. Get data from **NoteService.cs** service.
+- The **NoteService.cs** service passes data from the repository layer to the API layer (controller). It validate the data and convert it to a DTO type.
+- Data access is provided by the repository template through **GenericRepository<TEntity>**, which implements the **IGenericRepository<TEntity>** interface. GenericRepository is a repository class that provides basic CRUD operations on various IEntities.
 - AppDBContext.cs DbContext class provides access and managing DB`s data. To change path to SQL Server path, mannage "DefaultLocalHost" property in appsettings.json configuration file.
 - Note.cs Entity representation class. Used to configure migration and managing to transfer data to database.
 - NoteDTO.cs Data transfer class that represents Note entity. It is adopted object can be more convenient for clients or hide properties that clients are not supposed to view.
 - NoteMapper Singletone Note NoteDTO mapper. Map the view model object (NoteDTO) to the domain (Note) model object, then we would manually do for each property.
+- 
 ## L3LabAngularUI
 ### Summary:
   Angular project SPA UI representation.
@@ -21,6 +23,12 @@
 - message.service.ts Servise that provide basic log messaging.
 - note-dto.ts Data transfer class that represents Note entity.
 - app-routing.module.ts Handle the navigation between **notes.component** and **note-detail.component**.
+## L3LabxUnitTestProject
+### Summary:
+  xUnit tests provided to check basic functionality **NoteController** and **NoteService** classes. Contained **NoteMockData**, **TestNoteController** and **TestNoteService** ckfsses.
+- **NoteMockData** contained mock data with predicted data, needed for put into methods.
+- **TestNoteController** class contain checks for CRUD methods of **NoteController** class.
+- **TestNoteService** class contain checks for methods of **NoteService** class.
 ## UI representation
 ### notes-component:
 ![image](https://user-images.githubusercontent.com/61427706/171133068-3e723eed-85af-4905-9ed6-e3bdb9b50b13.png)
